@@ -28,6 +28,23 @@
     .actions, .config-panel { margin-top: 20px; }
     .action-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; }
     .action-item label { flex: 1; }
+    @media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #ffffff;
+  }
+  .counter {
+    color: #ffffff;
+  }
+  input, button {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #444;
+  }
+  button:hover {
+    background-color: #333333;
+  }
+}
   </style>
   <link rel="manifest" href="manifest.json" />
 <link rel="apple-touch-icon" href="icon-192.png" />
