@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compteur</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; max-width: 600px; margin: auto; }
+    .counter { font-size: 48px; font-weight: bold; text-align: center; margin: 20px 0; }
+    input[type=number], input[type=text] {
+      padding: 10px;
+      font-size: 18px;
+      width: 100%;
+      margin: 5px 0;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px 2px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover { background-color: #0056b3; }
+    .actions, .config-panel { margin-top: 20px; }
+    .action-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; }
+    .action-item label { flex: 1; }
+  </style>
+</head>
+<body>
+  <div class="counter"><span id="points">0</span></div>
+
+  <input type="number" id="manualInput" placeholder="Ajouter ou retirer des points..." />
+  <div style="display: flex; justify-content: space-between;">
+    <button onclick="ajouter()">➕</button>
+    <button onclick="retirer()">➖</button>
+  </div>
+
+  <div class="actions">
+    <div id="actionList">
+      <div class="action-item"><label><input type="checkbox" value="2"> Sexto (-1)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="1"> Dire ou écrire "Je suis a toi (x1/jour) (-1)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="1"> Flash cul (-1)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="1"> Flash poitrine (-1)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="2"> Flash sexe (-2)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="3"> Masturbation F par S (-3)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="3"> Masturbation S par F (-3)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="3"> Masturbation S par S (-3)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="3"> Masturbation F par F et éjac sur S (-3)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="3"> Body Writting ou accessoire (-3)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="4"> Photo (-4)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="5"> SexToy (-5)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="5"> Vidéo (-5)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="5"> Exhib IVL (-5)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="5"> Pas de culotte (-5)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="10"> Faire l'amour (-10)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="15"> Baiser (-15)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="15"> Pipe (-15)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="20"> Cul (-20)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="25"> Scénario Complet (-100)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="1"> Bonus : Matin (-1)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="1"> Bonus : Dirty talk (-1)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="2"> Bonus : Initiative S (-2)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="2"> Bonus : Voiture (-2)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="3"> Bonus : Extérieur (-3)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="3"> Bonus : Journée (-3)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="3"> Bonus : Obéissance (-3)</label></div>
+      <div class="action-item"><label><input type="checkbox" value="5"> Bonus : Public (-5)</label></div>
+    </div>
+    <button onclick="validerActions()" style="width: 100%;">Valider</button>
+  </div>
+
+  <script>
+    const pointsEl = document.getElementById("points");
+    const manualInput = document.getElementById("manualInput");
+
+    let points = parseInt(localStorage.getItem("points") || "0");
+
+    function majAffichage() {
+      pointsEl.innerText = points;
+      localStorage.setItem("points", points);
+    }
+
+    function ajouter() {
+      const val = parseInt(manualInput.value);
+      if (!isNaN(val)) {
+        points += val;
+        majAffichage();
+        manualInput.value = "";
+      }
+    }
+
+    function retirer() {
+      const val = parseInt(manualInput.value);
+      if (!isNaN(val)) {
+        points -= val;
+        majAffichage();
+        manualInput.value = "";
+      }
+    }
+
+    function validerActions() {
+      const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+      let total = 0;
+      checkboxes.forEach(cb => total += parseInt(cb.value));
+      points -= total;
+      majAffichage();
+      checkboxes.forEach(cb => cb.checked = false);
+    }
+
+    majAffichage();
+  </script>
+</body>
+</html>
