@@ -53,11 +53,7 @@
 <body>
   <div class="counter"><span id="points">0</span></div>
 
-  <input type="number" id="manualInput" placeholder="Ajouter ou retirer des points..." />
-  <div style="display: flex; justify-content: space-between;">
-    <button onclick="ajouter()">➕</button>
-    <button onclick="retirer()">➖</button>
-  </div>
+
 
   <div class="actions">
     <div id="actionList">
@@ -94,6 +90,11 @@
       <div class="action-item"><label><input type="checkbox" value="5"> Bonus : Public (-5)</label></div>
     </div>
     <button onclick="validerActions()" style="width: 100%;">Valider</button>
+       <hr />
+      <input type="number" id="manualInput" placeholder="Ajouter ou retirer des points..." />
+  <div style="display: flex; justify-content: space-between;">
+    <button onclick="ajouter()">➕</button>
+    <button onclick="retirer()">➖</button>
   </div>
 
   <script>
