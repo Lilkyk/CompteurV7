@@ -52,8 +52,13 @@
 </head>
 <body>
   <div class="counter"><span id="points">0</span></div>
-
-
+  <div style="margin: 30px 0;">
+  <div style="font-weight: bold; font-size: 18px; margin-bottom: 5px;">XP</div>
+  <div style="background: #ccc; border-radius: 10px; overflow: hidden; height: 20px;">
+    <div id="xpBar" style="background: #28a745; height: 100%; width: 0%; transition: width 0.3s;"></div>
+  </div>
+  <div id="levelInfo" style="text-align: center; margin-top: 5px; font-size: 16px;"></div>
+</div>
 
   <div class="actions">
     <div id="actionList">
@@ -127,6 +132,34 @@
 
     let points = parseInt(localStorage.getItem("points") || "0");
 
+    let xp = parseInt(localStorage.getItem("xp") || "0");
+
+const xpBar = document.getElementById("xpBar");
+const levelInfo = document.getElementById("levelInfo");
+
+const levels = [
+  "Pucelle", "Flirteuse", "Allumeuse", "Chaude débutante", "Branleuse timide",
+  "Lécheuse d’idées", "Initiée du cul", "Doigt curieux", "Petite cochonne", "Jouisseuse novice",
+  "Experte en soupirs", "Mignonne perverse", "Salope appliquée", "Langue en mission", "Obsédée du bas",
+  "Pénétrable consentie", "Pipeuse convaincue", "Putain en herbe", "Succube apprentie", "Démonette du clito",
+  "Gobeuse d’âmes", "Montée sur ressorts", "Ventre en chaleur", "Poupée désinhibée", "Saliveuse compulsive",
+  "Cavalière soumise", "Incontinentale du cul", "Sexe toujours prêt", "Muse du stupre", "Torche-seins",
+  "Mâcheuse de queues", "Obéissante cradingue", "Avaleuse de perversions", "Chienne élégante", "Miroir à fantasmes",
+  "Partouzeuse dévouée", "Trou béni", "Escorte de l’Enfer", "Hystérique du god", "Prêtresse du vice",
+  "Déviante vénérée", "Sainte Putain", "Reine des coups", "Oracle des reins", "Gourmande de foutre",
+  "Offerte éternelle", "Suceuse canonisée", "Fée sodomique", "Possédée du plaisir", "Déesse du stupre"
+];
+
+function majXPBar() {
+  const niveau = Math.floor(xp / 300);
+  const nomNiveau = levels[Math.min(niveau, levels.length - 1)];
+  const progression = (xp % 300) / 300 * 100;
+
+  xpBar.style.width = progression + "%";
+  levelInfo.textContent = `Niveau ${niveau + 1} : ${nomNiveau}`;
+  localStorage.setItem("xp", xp);
+}
+
     function majAffichage() {
       pointsEl.innerText = points;
       localStorage.setItem("points", points);
@@ -150,16 +183,22 @@
       }
     }
 
-    function validerActions() {
-      const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
-      let total = 0;
-      checkboxes.forEach(cb => total += parseInt(cb.value));
-      points -= total;
-      majAffichage();
-      checkboxes.forEach(cb => cb.checked = false);
-    }
+   function validerActions() {
+  const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+  let total = 0;
+  checkboxes.forEach(cb => total += parseInt(cb.value));
+  points -= total;
+  if (total > 0) {
+    xp += total;
+    majXPBar();
+  }
+  majAffichage();
+  checkboxes.forEach(cb => cb.checked = false);
+}
+
 
     majAffichage();
+    majXPBar();
   </script>
 </body>
 </html>
